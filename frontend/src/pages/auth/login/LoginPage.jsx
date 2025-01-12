@@ -5,8 +5,8 @@ import XSvg from '../../../components/svgs/X';
 
 import { MdPassword } from 'react-icons/md';
 
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
+
 import { FaUser } from 'react-icons/fa';
 
 const LoginPage = () => {
@@ -14,6 +14,8 @@ const LoginPage = () => {
     username: '',
     password: '',
   });
+
+  const queryClient = useQueryClient();
 
   const {
     mutate: loginMutation,
@@ -39,7 +41,8 @@ const LoginPage = () => {
       }
     },
     onSuccess: () => {
-      toast.success('Login successful');
+      queryClient.invalidateQueries({ queryKey: ['authUser'] });
+      
     },
   });
 
