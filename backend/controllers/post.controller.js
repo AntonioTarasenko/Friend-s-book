@@ -148,9 +148,13 @@ export const hateUnhatePost = async (req, res) => {
 
     if (userHatedPost) {
       await Post.updateOne({ _id: postId }, { $pull: { hates: userId } });
-      res.status(200).json({ message: 'Post unhated successfully' });
+      await User.updateOne({ _id: userId }, { $pull: { hatedPosts: postId } });
+
+      const updatedHates = post.hates.filter((id) => id.toString() !== userId.toString());
+      res.status(200).json(updatedHates);
     } else {
       post.hates.push(userId);
+      await User.updateOne({ _id: userId }, { $push: { hatedPosts: postId } });
       await post.save();
 
       const notification = new Notification({
@@ -160,7 +164,9 @@ export const hateUnhatePost = async (req, res) => {
       });
       await notification.save();
 
-      res.status(200).json({ message: 'Post hated successfully' });
+      const updatedHates = post.hates;
+
+      res.status(200).json(updatedHates);
     }
   } catch (error) {
     console.log('Error in hateUnhatePost controller: ', error);
