@@ -13,8 +13,8 @@ export const getNotifications = async (req, res) => {
 
 		res.status(200).json(notifications);
 	} catch (error) {
-		console.log("Error in getNotifications function", error.message);
-		res.status(500).json({ error: "Internal Server Error" });
+		console.log("Ошибка в функции getNotifications", error.message);
+		res.status(500).json({ error: "Внутренняя ошибка сервера" });
 	}
 };
 
@@ -24,9 +24,9 @@ export const deleteNotifications = async (req, res) => {
 
 		await Notification.deleteMany({ to: userId });
 
-		res.status(200).json({ message: "Notifications deleted successfully" });
+		res.status(200).json({ message: "Уведомления успешно удалены" });
 	} catch (error) {
-		console.log("Error in deleteNotifications function", error.message);
-		res.status(500).json({ error: "Internal Server Error" });
+		console.log("Ошибка в функции deleteNotifications", error.message);
+		res.status(500).json({ error: "Внутренняя ошибка сервера" });
 	}
 };

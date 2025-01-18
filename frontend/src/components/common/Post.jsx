@@ -32,7 +32,7 @@ const Post = ({ post }) => {
         const data = await res.json();
 
         if (!res.ok) {
-          throw new Error(data.error || "Something went wrong");
+          throw new Error(data.error || "Что-то пошло не так");
         }
         return data;
       } catch (error) {
@@ -40,7 +40,7 @@ const Post = ({ post }) => {
       }
     },
     onSuccess: () => {
-      toast.success("Post deleted successfully");
+      toast.success("Сообщение успешно удалено");
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
@@ -53,7 +53,7 @@ const Post = ({ post }) => {
         });
         const data = await res.json();
         if (!res.ok) {
-          throw new Error(data.error || "Something went wrong");
+          throw new Error(data.error || "Что-то пошло не так");
         }
         return data;
       } catch (error) {
@@ -83,7 +83,7 @@ const Post = ({ post }) => {
         });
         const data = await res.json();
         if (!res.ok) {
-          throw new Error(data.error || "Something went wrong");
+          throw new Error(data.error || "Что-то пошло не так");
         }
         return data;
       } catch (error) {
@@ -118,7 +118,7 @@ const Post = ({ post }) => {
         const data = await res.json();
 
         if (!res.ok) {
-          throw new Error(data.error || "Something went wrong");
+          throw new Error(data.error || "Что-то пошло не так");
         }
         return data;
       } catch (error) {
@@ -126,7 +126,7 @@ const Post = ({ post }) => {
       }
     },
     onSuccess: () => {
-      toast.success("Comment posted successfully");
+      toast.success("Комментарий успешно опубликован");
       setComment("");
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
@@ -207,11 +207,11 @@ const Post = ({ post }) => {
 {/* We're using Modal Component from DaisyUI */}
 <dialog id={`comments_modal${post._id}`} className='modal border-none outline-none'>
 								<div className='modal-box rounded border border-gray-600'>
-									<h3 className='font-bold text-lg mb-4'>COMMENTS</h3>
+									<h3 className='font-bold text-lg mb-4'>КОММЕНТАРИИ</h3>
 									<div className='flex flex-col gap-3 max-h-60 overflow-auto'>
 										{post.comments.length === 0 && (
 											<p className='text-sm text-slate-500'>
-												No comments yet 🤔 Be the first one 😉
+												Пока нет комментариев 🤔 Станьте первым 😉
 											</p>
 										)}
 										{post.comments.map((comment) => (
@@ -251,7 +251,7 @@ const Post = ({ post }) => {
 									</form>
 								</div>
 								<form method='dialog' className='modal-backdrop'>
-									<button className='outline-none'>close</button>
+									<button className='outline-none'>закрыть</button>
 								</form>
 							</dialog>
 							{/* <div className='flex gap-1 items-center group cursor-pointer'>

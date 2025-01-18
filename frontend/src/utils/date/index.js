@@ -8,35 +8,19 @@ export const formatPostDate = (createdAt) => {
 	const timeDifferenceInDays = Math.floor(timeDifferenceInHours / 24);
 
 	if (timeDifferenceInDays > 1) {
-		return createdAtDate.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+		return createdAtDate.toLocaleDateString("ru-RU", { month: "short", day: "numeric" });
 	} else if (timeDifferenceInDays === 1) {
-		return "1d";
+		return "1 дн.";
 	} else if (timeDifferenceInHours >= 1) {
-		return `${timeDifferenceInHours}h`;
+		return `${timeDifferenceInHours} ч.`;
 	} else if (timeDifferenceInMinutes >= 1) {
-		return `${timeDifferenceInMinutes}m`;
+		return `${timeDifferenceInMinutes} мин.`;
 	} else {
-		return "Just now";
+		return "Только что";
 	}
 };
 
 export const formatMemberSinceDate = (createdAt) => {
 	const date = new Date(createdAt);
-	const months = [
-		"January",
-		"February",
-		"March",
-		"April",
-		"May",
-		"June",
-		"July",
-		"August",
-		"September",
-		"October",
-		"November",
-		"December",
-	];
-	const month = months[date.getMonth()];
-	const year = date.getFullYear();
-	return `Joined ${month} ${year}`;
+	return `Присоединился ${date.toLocaleDateString("ru-RU", { month: "long", year: "numeric" })}`;
 };

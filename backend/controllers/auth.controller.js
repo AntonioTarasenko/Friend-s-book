@@ -8,21 +8,21 @@ export const signup = async (req, res) => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: 'Invalid email format' });
+      return res.status(400).json({ error: 'Неверный формат электронной почты' });
     }
 
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      return res.status(400).json({ error: 'Username is already taken' });
+      return res.status(400).json({ error: 'Имя пользователя уже занято' });
     }
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
-      return res.status(400).json({ error: 'Email is already taken' });
+      return res.status(400).json({ error: 'Email уже занят' });
     }
     if (password.length < 6) {
       return res
         .status(400)
-        .json({ error: 'Password must be at least 6 characters long' });
+        .json({ error: 'Пароль должен быть длиной не менее 6 символов' });
     }
     // hash password
     const salt = await bcrpyt.genSalt(10);
@@ -50,12 +50,12 @@ export const signup = async (req, res) => {
         coverImg: newUser.coverImg,
       });
     } else {
-      res.status(400).json({ error: 'Invalid user data' });
+      res.status(400).json({ error: 'Неверные данные пользователя' });
     }
   } catch (error) {
-    console.log('Error in signup controller', error.message);
+    console.log('Ошибка в контроллере регистрации', error.message);
 
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 };
 
@@ -69,7 +69,7 @@ export const login = async (req, res) => {
     );
 
     if (!user || !isPasswordCorrect) {
-      return res.status(400).json({ error: 'Invalid username or password' });
+      return res.status(400).json({ error: 'Неверное имя пользователя или пароль' });
     }
 
     generateTokenAndSetCookie(user._id, res);
@@ -85,18 +85,18 @@ export const login = async (req, res) => {
       coverImg: user.coverImg,
     });
   } catch (error) {
-    console.log('Error in login controller', error.message);
-    res.status(500).json({ error: 'Internal server error' });
+    console.log('Ошибка в контроллере входа', error.message);
+    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 };
 
 export const logout = async (req, res) => {
   try {
     res.cookie('jwt', '', { maxAge: 0 });
-    res.status(200).json({ message: 'Logged out successfully' });
+    res.status(200).json({ message: 'Успешно вышел(а) из системы' });
   } catch (error) {
-    console.log('Error in logout controller', error.message);
-    res.status(500).json({ error: 'Internal server error' });
+    console.log('Ошибка в контроллере выхода из системы', error.message);
+    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 };
 
@@ -106,7 +106,7 @@ export const getMe = async (req, res) => {
     const user = await User.findById(req.user._id).select('-password');
     res.status(200).json(user);
   } catch (error) {
-    console.log('Error in getMe controller', error.message);
-    res.status(500).json({ error: 'Internal server error' });
+    console.log('Ошибка в контроллере getMe', error.message);
+    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 }

@@ -42,7 +42,7 @@ const ProfilePage = () => {
         const res = await fetch(`/api/users/profile/${username}`);
         const data = await res.json();
         if (!res.ok) {
-          throw new Error(data.error || 'Something went wrong');
+          throw new Error(data.error || 'Что-то пошло не так');
         }
         return data;
       } catch (error) {
@@ -79,7 +79,7 @@ const ProfilePage = () => {
         {/* HEADER */}
         {(isLoading || isRefetching) && <ProfileHeaderSkeleton />}
         {!isLoading && !isRefetching && !user && (
-          <p className='text-center text-lg mt-4'>User not found</p>
+          <p className='text-center text-lg mt-4'>Пользователь не найден</p>
         )}
         <div className='flex flex-col'>
           {!isLoading && !isRefetching && user && (
@@ -91,7 +91,7 @@ const ProfilePage = () => {
                 <div className='flex flex-col'>
                   <p className='font-bold text-lg'>{user?.fullName}</p>
                   <span className='text-sm text-slate-500'>
-                    {POSTS?.length} posts
+                    {POSTS?.length} сообщения
                   </span>
                 </div>
               </div>
@@ -210,13 +210,13 @@ const ProfilePage = () => {
                     <span className='font-bold text-xs'>
                       {user?.following.length}
                     </span>
-                    <span className='text-slate-500 text-xs'>Following</span>
+                    <span className='text-slate-500 text-xs'>Читаемые</span>
                   </div>
                   <div className='flex gap-1 items-center'>
                     <span className='font-bold text-xs'>
                       {user?.followers.length}
                     </span>
-                    <span className='text-slate-500 text-xs'>Followers</span>
+                    <span className='text-slate-500 text-xs'>Читатили</span>
                   </div>
                 </div>
               </div>
@@ -225,7 +225,7 @@ const ProfilePage = () => {
                   className='flex justify-center flex-1 p-3 hover:bg-secondary transition duration-300 relative cursor-pointer'
                   onClick={() => setFeedType('posts')}
                 >
-                  Posts
+                  Сообщение
                   {feedType === 'posts' && (
                     <div className='absolute bottom-0 w-10 h-1 rounded-full bg-primary' />
                   )}
@@ -234,7 +234,7 @@ const ProfilePage = () => {
                   className='flex justify-center flex-1 p-3 text-slate-500 hover:bg-secondary transition duration-300 relative cursor-pointer'
                   onClick={() => setFeedType('likes')}
                 >
-                  Likes
+                  Нравится
                   {feedType === 'likes' && (
                     <div className='absolute bottom-0 w-10  h-1 rounded-full bg-primary' />
                   )}

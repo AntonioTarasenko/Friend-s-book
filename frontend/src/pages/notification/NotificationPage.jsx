@@ -16,7 +16,7 @@ const NotificationPage = () => {
             try {
                 const res = await fetch("/api/notifications");
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.error || "Something went wrong");
+                if (!res.ok) throw new Error(data.error || "Что-то пошло не так");
                 return data;
             } catch (error) {
                 throw new Error(error);
@@ -32,14 +32,14 @@ const NotificationPage = () => {
                 });
                 const data = await res.json();
 
-                if (!res.ok) throw new Error(data.error || "Something went wrong");
+                if (!res.ok) throw new Error(data.error || "Что-то пошло не так");
                 return data;
             } catch (error) {
                 throw new Error(error);
             }
         },
         onSuccess: () => {
-            toast.success("Notifications deleted successfully");
+            toast.success("Уведомления успешно удалены");
             queryClient.invalidateQueries({ queryKey: ["notifications"] });
         },
         onError: (error) => {
@@ -51,7 +51,7 @@ const NotificationPage = () => {
         <>
             <div className='flex-[4_4_0] border-l border-r border-gray-700 min-h-screen'>
                 <div className='flex justify-between items-center p-4 border-b border-gray-700'>
-                    <p className='font-bold'>Notifications</p>
+                    <p className='font-bold'>Уведомления</p>
                     <div className='dropdown '>
                         <div tabIndex={0} role='button' className='m-1'>
                             <IoSettingsOutline className='w-4' />
@@ -61,7 +61,7 @@ const NotificationPage = () => {
                             className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
                         >
                             <li>
-                                <a onClick={deleteNotifications}>Delete all notifications</a>
+                                <a onClick={deleteNotifications}>Удалить все уведомления</a>
                             </li>
                         </ul>
                     </div>
@@ -71,7 +71,7 @@ const NotificationPage = () => {
                         <LoadingSpinner size='lg' />
                     </div>
                 )}
-                {notifications?.length === 0 && <div className='text-center p-4 font-bold'>No notifications 🤔</div>}
+                {notifications?.length === 0 && <div className='text-center p-4 font-bold'>Нет уведомлений 🤔</div>}
                 {notifications?.map((notification) => (
                     <div className='border-b border-gray-700' key={notification._id}>
                         <div className='flex gap-2 p-4'>
@@ -86,9 +86,9 @@ const NotificationPage = () => {
                                 </div>
                                 <div className='flex gap-1'>
                                     <span className='font-bold'>@{notification.from.username}</span>{" "}
-                                    {notification.type === "follow" && "followed you"}
-                                    {notification.type === "like" && "liked your post"}
-                                    {notification.type === "hate" && "hated your post"}
+                                    {notification.type === "follow" && "последовал за тобой"}
+                                    {notification.type === "like" && "понравился ваш пост"}
+                                    {notification.type === "hate" && "ненавидит твой пост"}
                                 </div>
                             </Link>
                         </div>

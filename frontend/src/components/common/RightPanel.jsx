@@ -14,7 +14,7 @@ const RightPanel = () => {
         const res = await fetch('/api/users/suggested');
         const data = await res.json();
         if (!res.ok) {
-          throw new Error(data.error || 'Something went wrong!');
+          throw new Error(data.error || 'Что-то пошло не так!');
         }
         return data;
       } catch (error) {
@@ -30,7 +30,7 @@ const RightPanel = () => {
   return (
     <div className='hidden lg:block my-4 mx-2'>
       <div className='bg-[#16181C] p-4 rounded-md sticky top-2'>
-        <p className='font-bold'>Who to follow :</p>
+        <p className='font-bold'>За кем следить:</p>
         <div className='flex flex-col gap-4'>
           {/* item */}
           {isLoading && (
