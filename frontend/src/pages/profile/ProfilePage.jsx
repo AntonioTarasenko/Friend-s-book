@@ -154,8 +154,8 @@ const ProfilePage = () => {
                     onClick={() => follow(user?._id)}
                   >
                     {isPending && 'Loading...'}
-                    {!isPending && amIFollowing && 'Unfollow'}
-                    {!isPending && !amIFollowing && 'Follow'}
+                    {!isPending && amIFollowing && 'Отписаться'}
+                    {!isPending && !amIFollowing && 'Читать'}
                   </button>
                 )}
                 {(coverImg || profileImg) && (
@@ -167,7 +167,7 @@ const ProfilePage = () => {
                       setCoverImg(null);
                     }}
                   >
-                    {isUpdatingProfile ? 'Updating...' : 'Update'}
+                    {isUpdatingProfile ? 'Обновление...' : 'Обновить'}
                   </button>
                 )}
               </div>
