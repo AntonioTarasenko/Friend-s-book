@@ -16,7 +16,7 @@ const Sidebar = () => {
         const res = await fetch('/api/auth/logout', {
           method: 'POST',
         });
-		const data = await res.json();
+        const data = await res.json();
         if (!res.ok) {
           throw new Error(data.error || 'Что-то пошло не так');
         }
@@ -26,14 +26,24 @@ const Sidebar = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['authUser'] });
-	 
     },
     onError: () => {
       toast.error('Logout failed');
     },
   });
 
-  const { data:authUser } = useQuery({queryKey: ["authUser"]});
+  const { data: authUser } = useQuery({ queryKey: ['authUser'] });
+
+  const { data: notificationData } = useQuery({
+    queryKey: ['notifications'],
+    queryFn: async () => {
+      const res = await fetch('/api/notifications');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Что-то пошло не так');
+      return data;
+    },
+    // refetchInterval: 10000, // Автоматическое обновление каждые 10 секунд
+  });
 
   return (
     <div className='md:flex-[2_2_0] w-18 max-w-52'>
@@ -56,8 +66,11 @@ const Sidebar = () => {
               to='/notifications'
               className='flex gap-3 items-center hover:bg-stone-900 transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer'
             >
-              <IoNotifications className='w-6 h-6' />
+              <IoNotifications className='w-6 h-6 relative' />
               <span className='text-lg hidden md:block'>Уведомления</span>
+              {notificationData?.unread && (
+                <span className=' w-3 h-3 translate-y-[-3px] bg-red-500 rounded-full'></span>
+              )}
             </Link>
           </li>
 
