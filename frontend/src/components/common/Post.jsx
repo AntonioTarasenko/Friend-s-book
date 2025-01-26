@@ -211,7 +211,7 @@ const Post = ({ post }) => {
 									<div className='flex flex-col gap-3 max-h-60 overflow-auto'>
 										{post.comments.length === 0 && (
 											<p className='text-sm text-slate-500'>
-												Пока нет комментариев 🤔 Станьте первым 😉
+												Пока нет комментариев 🤔 Станьте первым 😉😉😉
 											</p>
 										)}
 										{post.comments.map((comment) => (
