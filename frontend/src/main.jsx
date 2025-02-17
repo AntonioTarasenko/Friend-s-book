@@ -13,7 +13,25 @@ const queryClient = new QueryClient({
   },
 });
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+// Создаем корневой элемент
+const rootElement = document.getElementById('root');
+const root = ReactDOM.createRoot(rootElement);
+
+// Функция для скрытия прелоадера
+const hidePreloader = () => {
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    // Добавляем анимацию исчезновения
+    preloader.style.opacity = '0';
+    // Удаляем элемент после завершения анимации
+    setTimeout(() => {
+      preloader.remove();
+    }, 500);
+  }
+};
+
+// Рендерим приложение
+root.render(
   <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
@@ -22,3 +40,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+// Скрываем прелоадер после полной загрузки
+window.addEventListener('load', hidePreloader);
+// На случай если событие load уже произошло
+if (document.readyState === 'complete') {
+  hidePreloader();
+}
